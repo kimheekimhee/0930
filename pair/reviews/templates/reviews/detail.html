@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- footer fixed with vh-100 value -->
+<div class="container vh-100">
+    <div class="row">
+        <div class="col-9 mt-5">
+            <h1>{{ data.title }}</h1>
+            <div>
+                <p class="text-black d-block my-2">
+                    <span>리뷰 작성 날짜 : {{ data.created_at }}</span>
+                </p>
+                <p class="text-black d-block my-2">
+                    <span">리뷰 수정 날짜 : {{ data.updated_at }}</span>
+                </p>
+            </div>
+
+            <hr />
+            <p>
+                {{ data.content }}
+            </p>
+
+            <hr class="my-0" />
+
+            <div class="d-flex justify-content-end mt-3 mb-5">
+                <button class="btn btn-outline-primary me-3" data-bs-toggle="modal" data-bs-target="#exampleModal">리뷰
+                    수정</button>
+                <a class="btn btn-outline-danger" href="{% url 'reviews:delete' _id=data.id %}">리뷰 삭제</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- 모달 -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">리뷰 수정</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{% url 'reviews:update' data.id %}" method="GET">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">제목</label>
+                        <input type="text" class="form-control" id="recipient-name" name="title"
+                            value="{{ data.title }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">내용</label>
+                        <textarea class="form-control" id="message-text" name="content">{{ data.content }}
+                            </textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">리뷰 쓰기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
